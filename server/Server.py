@@ -246,11 +246,11 @@ class UserService(pb.Referenceable):
             users[username].remote_logout()
             raise ClientNotConnected(username)
 
-        cb = lambda res : self.onAskForHelpResponse(helpId, username, res)
+        cb = lambda res : self.onAskForHelpResponse(res, helpId, username)
         deferred.addCallback(cb)
         return deferred 
 
-    def onAskForHelpResponse(self, helpId, cascUsername, result):
+    def onAskForHelpResponse(self, result, helpId, cascUsername):
         '''
         Deals with logging from the cascaders response for asking for hlp
         '''
@@ -272,6 +272,7 @@ class UserService(pb.Referenceable):
 
             msg = cascUsername + ' rejected your help request' 
             self.client.callRemote('serverSentMessage', helpId, msg)
+        return res
 
     def remote_sendMessage(self, helpId, toUser, message):
         '''
