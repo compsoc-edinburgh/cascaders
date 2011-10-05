@@ -14,8 +14,8 @@ gtk2reactor.install()
 
 from twisted.internet import reactor
 
-import cascaderview
-import dbusutil
+from cascaders import cascaderview
+from cascaders import dbusutil
 
 class RaiseableService(dbusutil.DbusService):
     '''Service provides a method of raising the window to dbus'''

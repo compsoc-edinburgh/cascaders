@@ -8,5 +8,7 @@ setup(name='Cascaders',
       author='CompSoc Edinburgh',
       author_email='compsoc-committee@googlegroups.com',
       url='http://www.comp-soc.com',
-      packages=['cascaders'],
+      packages=['cascaders',],
+      package_data = {'cascaders' : ['cascaders/data/*', 'cascaders/gui/*', 'cascaders/icons/*',]},
+      scripts=['cascadersapp',],
      )
