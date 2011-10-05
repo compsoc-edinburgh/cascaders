@@ -2,6 +2,8 @@
 
 '''
 Startup file, responsible for setting up the application and starting the gui
+
+It enforces a single instance when not in debug mode
 '''
 
 import logging

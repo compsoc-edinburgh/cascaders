@@ -1,4 +1,11 @@
 #!/usr/bin/python -O
+
+'''
+This file is an attempt to check the hosts on the network are valid
+
+TODO this is broken atm. Doesn't cope if the program wants input
+'''
+
 import os
 from subprocess import Popen, PIPE
 
