@@ -49,8 +49,10 @@ class RpcService(pb.Referenceable, CallbackMixin):
 
         This is response is then passed back to the user as 
         '''
-        return self._callCallbacks('userAskingForHelp', helpId, username,
-                                  hostname, subject, description)
+        results = self._callCallbacks('userAskingForHelp', helpId, username,
+                                      hostname, subject, description)
+        if len(results):
+            return results[0]
 
     #--------
 

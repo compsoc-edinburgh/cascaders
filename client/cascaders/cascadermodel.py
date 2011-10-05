@@ -232,8 +232,10 @@ class CascaderModel(CallbackMixin):
 
     def onUserAskingForHelp(self,  helpid, username, host,
                             subject, description):
-        self._callCallbacks('userasking', helpid, username,
-                            host, subject, description)
+        result = self._callCallbacks('userasking', helpid, username,
+                                     host, subject, description)
+        if len(result):
+            return result[0]
     #--------------------------------------------------------------------------
     def registerOnCascaderChanged(self, function):
         self._addCallback('cascaderschanged', function)
