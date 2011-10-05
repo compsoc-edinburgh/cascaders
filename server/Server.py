@@ -272,7 +272,7 @@ class UserService(pb.Referenceable):
 
             msg = cascUsername + ' rejected your help request' 
             self.client.callRemote('serverSentMessage', helpId, msg)
-        return res
+        return result
 
     def remote_sendMessage(self, helpId, toUser, message):
         '''
