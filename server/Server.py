@@ -9,6 +9,12 @@ import logging
 import logging.handlers
 
 #------------------------------------------------------------------------------
+# consts
+
+TIMEOUT_SECS = 10
+PING_EVERY_SECS = 30
+
+#------------------------------------------------------------------------------
 # logging
 
 LOG_FILENAME = 'cascader.log'
@@ -72,10 +78,10 @@ class UserService(pb.Referenceable):
         respond
         '''
         try:
-            timeoutCall = reactor.callLater(10, self.remote_logout)
+            timeoutCall = reactor.callLater(TIMEOUT_SECS, self.remote_logout)
             d = self.client.callRemote('ping')
             d.addCallback(lambda r: timeoutCall.cancel())
-            reactor.callLater(30, self.startPingClientLoop)
+            reactor.callLater(PING_EVERY_SECS, self.startPingClientLoop)
         except pb.DeadReferenceError:
             logger.debug('Ping to %s failed... the user must have quit' % self.user)
             self.remote_logout()
