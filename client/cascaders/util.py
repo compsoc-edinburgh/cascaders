@@ -2,7 +2,7 @@
 This is a bit messy, but this is a set of utility functions
 '''
 import time
-from logging import error, debug
+from logging import error
 
 import gtk 
 

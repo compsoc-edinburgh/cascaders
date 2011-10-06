@@ -4,9 +4,8 @@ core functionality that the user uses while using the application.
 
 It doesn't handle any functionality outside the frame such as messaging
 '''
-from logging import error, warn, debug
+from logging import debug
 import os
-import sys
 import socket
 import signal
 
@@ -17,7 +16,7 @@ from twisted.internet import reactor
 import twisted.internet.error
 
 #rpc
-import client, service
+import client
 
 import labmap
 import settings
@@ -234,11 +233,8 @@ class CascadersFrame:
             return reason
 
         def writeFunction(message):
-            try:
-                d = self.model.sendMessage(helpid, toUsername, message)
-                d.addErrback(writeError)
-            except client.NotConnected:
-                self.onServerLost()
+            d = self.model.sendMessage(helpid, toUsername, message)
+            d.addErrback(writeError)
 
         self.messageDialog.registerMessageCallback(helpid, writeFunction)
 
@@ -449,14 +445,11 @@ class CascadersFrame:
                 reason.trap(client.ClientNotConnected)
                 writeSysMsg('Error: The client was not connected')
 
-            try:
-                d = self.model.askForHelp(helpid,
-                                          cascaderUsername,
-                                          helpDialog.getSubject(),
-                                          helpDialog.getDescription())
-                d.addErrback(onNotConnected)
-            except client.NotConnected:
-                self.onServerLost()
+            d = self.model.askForHelp(helpid,
+                                      cascaderUsername,
+                                      helpDialog.getSubject(),
+                                      helpDialog.getDescription())
+            d.addErrback(onNotConnected)
     
     def onAddSubject(self, event):
         cb = self.builder.get_object('cbCascSubjectList')
@@ -512,7 +505,8 @@ class CascadersFrame:
         filterSub = [filterSub] if filterSub != 'All'  else None
 
         def onHostClick(event, widgit, host):
-            casc = self.cascaders.findCascader(host=host, subjects=filterSub)
+            casc = self.model.getCascaderData().findCascader(host=host,
+                                                             subjects=filterSub)
             if casc is None:
                 debug('Clicked on a host (%s) that wasn\'t '
                       'cascading for the given filter' % host)

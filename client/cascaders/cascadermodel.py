@@ -1,8 +1,7 @@
 '''
 Set of code that is not dependant on the gui
 '''
-from collections import defaultdict
-from logging import debug, info, warn, error
+from logging import debug, warn, error
 
 import service
 import client
@@ -284,49 +283,13 @@ class CascaderModel(CallbackMixin):
         self.addSubjects(self.cascadeSubjects)
 
     #--------------------------------------------------------------------------
-    def _handleServerLost(fn):
-        ''' decorator TODO really not sure this is needed '''
-        def function(self, *args, **kwargs):
-            try:
-                return fn(self, *args, **kwargs)
-            except client.NotConnected as e:
-                warn('Server was lost')
-                self._serverLost()
-                return e.getDeferred()
-        return function
-
-    def _serverLost(self):
-        '''
-        This should be called when the connection to the server is lost
-        it attempts to reconnect to the server
-        '''
-        debug('Caught sever lost')
-
-        def connected():
-            self._login()
-
-        def connectError(reason):
-            debug('Trying to connect...')
-            callConnect()
-            return False
-
-        def callConnect():
-            d = self.client.connect()
-            d.addErrback(lambda r: gobject.timeout_add(5000, connectError, r))
-            d.addCallback(connected)
-
-        callConnect()
-
-    #--------------------------------------------------------------------------
     def isCascading(self):
         return self.cascading
 
-    @_handleServerLost
     def startCascading(self):
         self.cascading = True
         return self.client.startCascading()
 
-    @_handleServerLost
     def stopCascading(self):
         self.cascading = False
         return self.client.stopCascading()
@@ -335,7 +298,6 @@ class CascaderModel(CallbackMixin):
     def cascadingSubjects(self):
         return self.cascadeSubjects
 
-    @_handleServerLost
     def addSubjects(self, subjects):
         '''
         This doesn't try to mimize data transfer by checking
@@ -346,16 +308,13 @@ class CascaderModel(CallbackMixin):
         debug('Adding subjects: %s' % str(subjects))
         return self.client.addSubjects(subjects)
 
-    @_handleServerLost
     def removeSubjects(self, subjects):
         self.cascadeSubjects = self.cascadeSubjects - set(subjects)
         return self.client.removeSubjects(subjects)
 
-    @_handleServerLost
     def askForHelp(self, helpid, username, subject, problem):
         return self.client.askForHelp(helpid, username, subject, problem)
 
-    @_handleServerLost
     def sendMessage(self, helpid, toUsername, message):
         '''
         This shouldn't really be here I don't think. It isn't abstract enough

@@ -142,6 +142,7 @@ class RpcClient(CallbackMixin):
 
         self.queuedFunctions = [] #list of functions queued until login
         
+        self.root = None #the object we get before login
         self.server = None #class that holds the primary server functions
 
         self.autoReconnect = False

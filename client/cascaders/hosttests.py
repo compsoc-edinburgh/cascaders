@@ -7,7 +7,6 @@ TODO this is broken atm. Doesn't cope if the program wants input
 '''
 
 import os
-from subprocess import Popen, PIPE
 
 import labmap
 
@@ -18,7 +17,7 @@ with open(os.path.join(wd, 'data', 'hosts')) as f:
     for lab in locator.getLabs():
         for host, location in locator.getMap(lab):
 
-            (c_stdin,c_stdout,c_stderr) = os.popen3('ssh %s' % host,'r')
+            (c_stdin, c_stdout, c_stderr) = os.popen3('ssh %s' % host,'r')
             out = c_stdout.read()
             err = c_stderr.read()
             c_stdin.close()
