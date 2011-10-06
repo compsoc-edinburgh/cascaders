@@ -11,8 +11,7 @@ from util import CallbackMixin
 #-------------------------------------------------------------------------------
 #constants
 PORT = 5010
-#HOST = 'kazila.jacobessex.com'
-HOST = 'localhost'
+HOST = 'www.comp-soc.com'
 #-------------------------------------------------------------------------------
 
 class CascadersData(object):
