@@ -7,7 +7,11 @@ from util import getComboBoxText, errorDialog
 
 class AskForHelp:
     '''
-    Core functionality for the ask for help box, includes validation
+    Core functionality for the ask for help box, which is created
+    from the CascaderFrame class. 
+    
+    This class does validation on the user input to ensure that what is 
+    sent to the server is valid(ish)
     '''
     def __init__(self, parentWindow, subjects, currentSubject = None):
         '''

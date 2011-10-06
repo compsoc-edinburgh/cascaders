@@ -4,7 +4,13 @@ import gtk
 from logging import debug
 
 class AcceptHelpDialog():
-    ''' Dialog asking the user if they will accept helping the user '''
+    '''
+    This is the dialog that comes up asking if the cascader wants to accept
+    the help from the user. This is relativly dumb class
+
+    It is used by the CascaderFrame class
+    '''
+
     def __init__(self, parentWindow, username, subject, description):
         builder = gtk.Builder()
 
@@ -25,11 +31,11 @@ class AcceptHelpDialog():
         self.window.show_all()
         self.window.run()
 
-    def onReject(self, e):
+    def _onReject(self, e):
         self.accept = False
         self.window.destroy()
 
-    def onAccept(self, e):
+    def _onAccept(self, e):
         debug('Cascader accepted')
         self.accept = True
         self.window.destroy()

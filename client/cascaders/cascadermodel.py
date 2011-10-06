@@ -1,5 +1,8 @@
 '''
-Set of code that is not dependant on the gui
+Set of code that is not dependant on the gui and is intented to provide
+the model for the main interaction with the server. The main class that
+should be used is the CascaderModel class. The other classes are mainly
+helper classes
 '''
 from logging import debug, warn, error
 
@@ -15,14 +18,14 @@ HOST = 'www.comp-soc.com'
 #-------------------------------------------------------------------------------
 
 class CascadersData(object):
-    ''' Manages a list of cascaders and provides helpful functions '''
+    ''' Manages the list of cascaders and provides lookup functions '''
 
     def __init__(self, locator, username):
         '''
         locator is a object that implements labFromHostname.
 
-        username is the current users username. This is excluded from
-        results so that you are never displayed as a cascader
+        username -  the current users username. This is (optionally) excluded
+        from results so that you are never displayed as a cascader
         '''
         self.locator = locator
         self.username = username
@@ -96,11 +99,13 @@ class CascadersData(object):
                  'prob not cascading' % username)
 
     def findCascaders(self, lab=None, subjects=None, host=None,
-                            includeMe = False):
+                            includeMe=False):
         '''
         Find all cascaders that match the given patterns, although
         this will not return any cascaders that are not cascading in 
         any subjects
+
+        includeMe - Include the user (if the user is cascading) in results
 
         TODO really slow, not sure it matters
 
@@ -169,15 +174,15 @@ class CascaderModel(CallbackMixin):
         self.client = client.RpcClient(self.service, HOST,
                                        PORT, username, hostname)
 
-        s.registerOnCascaderRemovedSubjects(self.onCascaderRemovedSubjects)
-        s.registerOnCascaderAddedSubjects(self.onCascaderAddedSubjects)
+        s.registerOnCascaderRemovedSubjects(self._onCascaderRemovedSubjects)
+        s.registerOnCascaderAddedSubjects(self._onCascaderAddedSubjects)
 
-        s.registerOnCascaderJoined(self.onCascaderJoined)
-        s.registerOnCascaderLeft(self.onCascaderLeft)
+        s.registerOnCascaderJoined(self._onCascaderJoined)
+        s.registerOnCascaderLeft(self._onCascaderLeft)
 
-        s.registerUserAskingForHelp(self.onUserAskingForHelp)
+        s.registerUserAskingForHelp(self._onUserAskingForHelp)
 
-        self.registerOnLogin(self.onLogin)
+        self.registerOnLogin(self._onLogin)
 
         self.subjects = set()
         self.cascadeSubjects = set()
@@ -206,29 +211,33 @@ class CascaderModel(CallbackMixin):
         return self.cascaders
     #--------------------------------------------------------------------------
     # Service callbacks
-    def onCascaderAddedSubjects(self, username, subjects):
+    # These are setup in the __init__ function so that the service (interface
+    # from server -> client) will call these when events occur
+    # For the most part these are just passed on upwards, maybe taking into
+    # account changes of data
+    def _onCascaderAddedSubjects(self, username, subjects):
         debug('Cascader %s added subjects %s' % (username, subjects))
         self.cascaders.addCascaderSubjects(username, subjects)
         self._callCallbacks('cascaderschanged', self.cascaders)
 
-    def onCascaderRemovedSubjects(self, username, subjects):
+    def _onCascaderRemovedSubjects(self, username, subjects):
         debug('Cascader %s removed subjects %s' % (username, subjects))
         self.cascaders.removeCascaderSubjects(username, subjects)
         self._callCallbacks('cascaderschanged', self.cascaders)
 
-    def onCascaderJoined(self, username, hostname, subjects):
+    def _onCascaderJoined(self, username, hostname, subjects):
         debug('New cascader: (%s, (%s, %s)' % (username,
                                                hostname,
                                                str(subjects)))
         self.cascaders.addCascader(username, hostname, subjects)
         self._callCallbacks('cascaderschanged', self.cascaders)
 
-    def onCascaderLeft(self, username):
+    def _onCascaderLeft(self, username):
         debug('Cascader left: %s' % username)
         self.cascaders.removeCascader(username)
         self._callCallbacks('cascaderschanged', self.cascaders)
 
-    def onUserAskingForHelp(self,  helpid, username, host,
+    def _onUserAskingForHelp(self,  helpid, username, host,
                             subject, description):
         result = self._callCallbacks('userasking', helpid, username,
                                      host, subject, description)
@@ -271,7 +280,7 @@ class CascaderModel(CallbackMixin):
 
         return d
 
-    def onLogin(self, *a):
+    def _onLogin(self, *a):
         '''
         This tries for force everything to the way it was before
         the server disconnected

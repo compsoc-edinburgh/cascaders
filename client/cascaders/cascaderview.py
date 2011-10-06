@@ -194,19 +194,30 @@ class CascadersFrame:
             errorDialog('Failed to login, server reported %s' % reason.getErrorMessage())
             self.quit()
 
-        def connectErr(reason):
+        def catchallLoginErr(reason):
+            errorDialog('Failed to login, server reported %s' % reason.getErrorMessage())
+            self.quit()
+
+        def connectErrRefused(reason):
             reason.trap(twisted.internet.error.ConnectionRefusedError)
             errorDialog('Failed to connect to the '
                         'server, the connection was refused')
             self.quit()
 
+        def catchallConnectErr(reason):
+            errorDialog('Failed to connect to the '
+                    'server: %s' % reason.getErrorMessage())
+            self.quit()
+
         def connected(result):
             d = self.model.login()
             d.addErrback(loginErr)
+            d.addErrback(catchallLoginErr)
 
         d = self.model.connect()
         d.addCallback(connected)
-        d.addErrback(connectErr)
+        d.addErrback(connectErrRefused)
+        d.addErrback(catchallConnectErr)
 
     #--------------------------------------------------------------------------
     def setupMessagingWindow(self, helpid, toUsername, remoteHost, isUserCasc):
@@ -482,11 +493,6 @@ class CascadersFrame:
     #-- -----------------------------------------------------------------------
 
     def onFilterLabChange(self, evt):
-        '''
-        This is called before a lot of the things are created fully
-        as it is set to its default value. This has to check that things
-        fully exist before calling functions on them
-        '''
         debug('Filter Lab Changed')
 
         self.updateCascaderLists(self.model.getCascaderData())
@@ -505,6 +511,10 @@ class CascadersFrame:
         filterSub = [filterSub] if filterSub != 'All'  else None
 
         def onHostClick(event, widgit, host):
+            '''
+            Function is passed into the map and called when the user
+            clicks on a host
+            '''
             casc = self.model.getCascaderData().findCascader(host=host,
                                                              subjects=filterSub)
             if casc is None:

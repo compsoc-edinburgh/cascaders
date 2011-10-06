@@ -123,6 +123,11 @@ class RpcClient(CallbackMixin):
     To try and maintin a responsive interface when connecting, it is possible
     to call functions on the server, they will just be queued and called
     when login has completed
+
+    TODO this is not the case when the clien has diconnected
+
+
+    This will also attempt to reconnect when the server has disconnected
     '''
     def __init__(self, service, host, port, username, hostname):
         '''
