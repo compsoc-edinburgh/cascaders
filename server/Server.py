@@ -68,13 +68,17 @@ class UserService(pb.Referenceable):
     def startPingClientLoop(self):
         '''
         This ensures that cascaders who are not connected are removed from 
-        the system
+        the system. This also will logout users if they take too long to
+        respond
         '''
         try:
-            self.client.callRemote('ping')
+            timeoutCall = reactor.callLater(10, self.remote_logout)
+            d = self.client.callRemote('ping')
+            d.addCallback(lambda r: timeoutCall.cancel())
+            reactor.callLater(30, self.startPingClientLoop)
         except pb.DeadReferenceError:
+            logger.debug('Ping to %s failed... the user must have quit' % self.user)
             self.remote_logout()
-        reactor.callLater(120, self.startPingClientLoop)
     
     def remote_logout(self):
         '''
@@ -245,6 +249,8 @@ class UserService(pb.Referenceable):
             logger.debug('Client wasn\'t connected')
             users[username].remote_logout()
             raise ClientNotConnected(username)
+        except KeyError:
+            raise ClientNotConnected(username)
 
         cb = lambda res : self.onAskForHelpResponse(res, helpId, username)
         deferred.addCallback(cb)
@@ -287,8 +293,13 @@ class UserService(pb.Referenceable):
         try:
             users[toUser].message(helpId, message)
         except pb.DeadReferenceError:
-            logger.debug('Client wasn\'t connected')
+            logger.debug('DeadRef. Client not connected')
             self.remote_logout()
+            raise ClientNotConnected(toUser)
+        except KeyError:
+            logger.debug('Client not found')
+            raise ClientNotConnected(toUser)
+
 
         logger.info(self.user + "->" + toUser + ":" + message)
 
@@ -305,8 +316,9 @@ class UserService(pb.Referenceable):
         try:
             self.client.callRemote('userSentMessage', helpId, message)
         except pb.DeadReferenceError:
-            logger.debug('Client wasn\'t connected')
+            logger.debug('DeadRef. Client not connected')
             self.remote_logout()
+            raise ClientNotConnected(self.user)
 
     def remote_ping(self):
         ''' Can be used to see that the server is up and functioning '''

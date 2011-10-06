@@ -222,16 +222,21 @@ class CascadersFrame:
         #the server
         def onMessageFromServer(fromType, message):
             if fromType == 'user':
-                fromName = toUsername 
+                fromName = self.username 
             elif fromType == 'server':
                 fromName = 'Server'
-            self.messageDialog.writeMessage(helpid, self.username, message)
+            self.messageDialog.writeMessage(helpid, fromName, message)
             
         self.model.registerOnMessgeHandler(helpid, onMessageFromServer)
 
+        def writeError(reason):
+            self.messageDialog.writeMessage(helpid, 'Server', 'The connection to the client was lost. Message not sent')
+            return reason
+
         def writeFunction(message):
             try:
-                self.model.sendMessage(helpid, toUsername, message)
+                d = self.model.sendMessage(helpid, toUsername, message)
+                d.addErrback(writeError)
             except client.NotConnected:
                 self.onServerLost()
 
@@ -340,8 +345,9 @@ class CascadersFrame:
                 gobject.timeout_add(5000, self._finishQuitTimeout)
                 l = self.model.logout()
                 l.addCallback(self._finishQuit)
-                l.addErrCallback(self._finishQuitErr)
-            except Exception:
+                l.addErrback(self._finishQuitErr)
+            except Exception as e:
+                debug('..Failed %s ' % e)
                 self._finishQuit()
         else:
             debug('No client, going to second stage shutdown directly')

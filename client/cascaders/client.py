@@ -29,7 +29,7 @@ class DeferredCall(object):
         self.callbacks.append((function, args))
         self.deferred.addCallback(function, *args)
 
-    def addErrCallback(self, function, *args):
+    def addErrback(self, function, *args):
         self.errbacks.append((function, args))
         self.deferred.addErrback(function, *args)
 
@@ -93,7 +93,7 @@ class DeferredResultWrapper(object):
     def __getattribute__(self, name):
         if name in ('addCallback', 'deferred'):
             return object.__getattribute__(self, name)
-        return self.deferred.__getattribue__(name)
+        return self.deferred.__getattribute__(name)
 
     def addCallback(self, function, *args, **kwargs):
         function = lambda deferred: deferred.addCallback(*args, **kwargs)

@@ -361,3 +361,6 @@ class CascaderModel(CallbackMixin):
         This shouldn't really be here I don't think. It isn't abstract enough
         '''
         return self.client.sendMessage(helpid, toUsername, message)
+
+    def logout(self):
+        return self.client.logout()
