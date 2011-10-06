@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Version=1
+Name=Cascaders App
+Comment=Helping people find help
+Exec=cascadersapp --noshow
+Icon=/usr/lib/python2.6/site-packages/cascaders/icons/cascade.ico
+Categories=Education;ComputerScience;
+X-GNOME-Autostart-enabled=true
+Name[en_GB]=autostart.desktop

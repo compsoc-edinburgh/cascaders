@@ -74,5 +74,5 @@ def _fixAutostartGnome(settings):
             debug('Moving autostart file to %s' % path)
             fromPath = os.path.join(os.path.dirname(__file__),
                                     'data',
-                                    'cascaders.desktop')
+                                    'autostart.desktop')
             shutil.copy(fromPath, path)
