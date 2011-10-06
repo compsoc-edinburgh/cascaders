@@ -4,6 +4,7 @@
 This file is an attempt to check the hosts on the network are valid
 '''
 
+import os
 import signal
 from subprocess import Popen, PIPE
 
