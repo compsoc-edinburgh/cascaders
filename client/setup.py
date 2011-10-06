@@ -16,6 +16,7 @@ setup(name='Cascaders',
       author_email='compsoc-committee@googlegroups.com',
       url='http://www.comp-soc.com',
       packages=['cascaders',],
-      package_data = {'cascaders' : ['cascaders/data/*', 'cascaders/gui/*', 'cascaders/icons/*',]},
+      package_data = {'cascaders' : ['data/*', 'gui/*', 'icons/*',]},
       scripts=['cascadersapp',],
+      data_files=[('/usr/share/applications/', ['cascaders/data/cascaders.desktop']),],
      )

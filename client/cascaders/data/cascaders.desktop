@@ -1,11 +1,10 @@
 [Desktop Entry]
 Type=Application
 Encoding=UTF-8
-Version=1.0
-Name=No Name
+Version=1
 Name=Cascaders App
 Comment=Helping people find help
-Exec=python cascaders --noshow
-Icon=/home/username/msn/icons/48x48/amsn.png 
+Exec=cascadersapp
+Icon=/usr/lib/python2.6/site-packages/cascaders/icons/cascade.ico
 Categories=Education;ComputerScience;
 X-GNOME-Autostart-enabled=true
