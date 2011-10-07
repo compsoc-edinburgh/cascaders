@@ -9,7 +9,7 @@ luongo.inf.ed.ac.uk:4,1
 rollo.inf.ed.ac.uk:0,2
 salo.inf.ed.ac.uk:4,2
 
-boychuck.inf.ed.ac.uk:0,3
+boychuck.inf.ed.ac.uk:0,3 ;NOT VALID
 bouillon.inf.ed.ac.uk:4,3
 
 hunwick.inf.ed.ac.uk:0,4
@@ -20,8 +20,8 @@ amati.inf.ed.ac.uk:0,5
 bieska.inf.ed.ac.uk:2,5
 bluthner.inf.ed.ac.uk:3,5
 
-allart.inf.ed.ac.uk:0,6
-dancia.inf.ed.ac.uk:4,6
+allart.inf.ed.ac.uk:0,6 ;NOT VALID
+dancia.inf.ed.ac.uk:4,6 ;NOT VALID
 
 chara.inf.ed.ac.uk:4,7
 
@@ -41,7 +41,7 @@ marchand.inf.ed.ac.uk:4,10
 fangio.inf.ed.ac.uk:0,11
 karsums.inf.ed.ac.uk:4,11
 
-dury.inf.ed.ac.uk:0,12
+dury.inf.ed.ac.uk:0,12 ;NOT VALID
 
 kesler.inf.ed.ac.uk:0,13
 kobasew.inf.ed.ac.uk:4,13
@@ -54,34 +54,34 @@ lovecchio.inf.ed.ac.uk:4,14
 
 [Level 5 West]
 cumiskey.inf.ed.ac.uk:0,0
-stashtny.inf.ed.ac.uk:1,0
+stashtny.inf.ed.ac.uk:1,0 ;NOT VALID
 salei.inf.ed.ac.uk:2,0
 budaj.inf.ed.ac.uk:3,0
-lilis.inf.ed.ac.uk:4,0
+lilis.inf.ed.ac.uk:4,0 ;NOT VALID
 
 holmstrom.inf.ed.ac.uk:0,2
 senna.inf.ed.ac.uk:1,2
 samsonov.inf.ed.ac.uk:2,2
-lidstrom.inf.ed.ac.uk:3,2
+lidstrom.inf.ed.ac.uk:3,2 ;NOT VALID
 modin.inf.ed.ac.uk:4,2
 
 hamilton.inf.ed.ac.uk:1,4
-eisholt.inf.ed.ac.uk:2,4
+eisholt.inf.ed.ac.uk:2,4 ;NOT VALID
 hunt.inf.ed.ac.uk:3,4
 assynt.inf.ed.ac.uk:4,4
 
 davidson.inf.ed.ac.uk:0,6
 coulthard.inf.ed.ac.uk:1,6
 hill.inf.ed.ac.uk:2,6
-brabhum.inf.ed.ac.uk:3,6
-manscll.inf.ed.ac.uk:4,6
+brabhum.inf.ed.ac.uk:3,6 ;NOT VALID
+mansell.inf.ed.ac.uk:4,6
 ledin.inf.ed.ac.uk:6,6
 svatos.inf.ed.ac.uk:7,6
 kovalev.inf.ed.ac.uk:8,6
 wolski.inf.ed.ac.uk:9,6
-pvospal.inf.ed.ac.uk:10,6
+pvospal.inf.ed.ac.uk:10,6 ;NOT VALID
 
-villsie.inf.ed.ac.uk:0,8
+villsie.inf.ed.ac.uk:0,8 ;NOT VALID
 raycroft.inf.ed.ac.uk:1,8
 guite.inf.ed.ac.uk:2,8
 clark.inf.ed.ac.uk:3,8
@@ -103,7 +103,7 @@ bracadale.inf.ed.ac.uk:9,10
 
 ohlund.inf.ed.ac.uk:0,12
 samuelsson.inf.ed.ac.uk:1,12
-aduya.inf.ed.ac.uk:2,12
+aduya.inf.ed.ac.uk:2,12 ;NOT VALID
 plekanec.inf.ed.ac.uk:3,12
 djurgardens.inf.ed.ac.uk:4,12
 scaven.inf.ed.ac.uk:6,12
@@ -116,19 +116,19 @@ modupe.inf.ed.ac.uk:10,12
 brundle.inf.ed.ac.uk:5,0
 wurz.inf.ed.ac.uk:6,0
 parise.inf.ed.ac.uk:7,0
-rosbery.inf.ed.ac.uk:8,0
+rosbery.inf.ed.ac.uk:8,0 ;NOT VALID
 
 tartini.inf.ed.ac.uk:0,1
 torelli.inf.ed.ac.uk:1,1
 hakkinen.inf.ed.ac.uk:5,1
 heidfeld.inf.ed.ac.uk:6,1
-rikkonen.inf.ed.ac.uk:7,1
+rikkonen.inf.ed.ac.uk:7,1 ;NOT VALID
 piquet.inf.ed.ac.uk:8,1
 
 tessarini.inf.ed.ac.uk:0,2
 mascitti.inf.ed.ac.uk:1,2
 
-blundeli.inf.ed.ac.uk:5,3
+blundeli.inf.ed.ac.uk:5,3 ;NOT VALID
 manfredini.inf.ed.ac.uk:6,3
 alfredsson.inf.ed.ac.uk:7,3
 sedin.inf.ed.ac.uk:8,3
@@ -144,13 +144,13 @@ canonbie.inf.ed.ac.uk:3,5
 mouswald.inf.ed.ac.uk:4,5
 
 annan.inf.ed.ac.uk:1,6
-eshakelemuir.inf.ed.ac.uk:2,6
+eshakelemuir.inf.ed.ac.uk:2,6 ;NOT VALID
 penpont.inf.ed.ac.uk:3,6
 largs.inf.ed.ac.uk:4,6
 
 ruthwell.inf.ed.ac.uk:1,8
 gretna.inf.ed.ac.uk:2,8
-lochmuben.inf.ed.ac.uk:3,8
+lochmuben.inf.ed.ac.uk:3,8 ;NOT VALID
 holywood.inf.ed.ac.uk:4,8
 
 langholm.inf.ed.ac.uk:1,9
@@ -169,7 +169,8 @@ siebert.inf.ed.ac.uk:2,3
 komisarek.inf.ed.ac.uk:2,4
 
 gopher.inf.ed.ac.uk:3,1
-subarc.inf.ed.ac.uk:3,2
+
+subarc.inf.ed.ac.uk:3,2 ;NOT VALID
 woodchuck.inf.ed.ac.uk:3,3
 mclaren.inf.ed.ac.uk:3,4
 
@@ -181,19 +182,19 @@ aberfeldy.inf.ed.ac.uk:1,1
 dalry.inf.ed.ac.uk:2,1
 aurora.inf.ed.ac.uk:3,1
 
-balveni.inf.ed.ac.uk:0,2
-aranson.inf.ed.ac.uk:1,2
+balveni.inf.ed.ac.uk:0,2 ;NOT VALID
+aranson.inf.ed.ac.uk:1,2 ;NOT VALID
 winfield.inf.ed.ac.uk:2,2
 auchentoshan.inf.ed.ac.uk:3,2
 
 [Level 5 South]
 
-oich .inf.ed.ac.uk:0,1
+oich.inf.ed.ac.uk:0,1 ;NOT VALID
 ore.inf.ed.ac.uk:0,2
-mullardock.inf.ed.ac.uk:0,3
+mullardock.inf.ed.ac.uk:0,3 ;NOT VALID
 neldricken.inf.ed.ac.uk:0,4
 savard.inf.ed.ac.uk:1,5
-sturn.inf.ed.ac.uk:2,5
+sturn.inf.ed.ac.uk:2,5 ;NOT VALID
 schaefer.inf.ed.ac.uk:3,5
 sobotka.inf.ed.ac.uk:4,5
 thom.inf.ed.ac.uk:5,5
@@ -202,10 +203,10 @@ loyal.inf.ed.ac.uk:5,7
 lubnaig.inf.ed.ac.uk:5,8
 lochmill.inf.ed.ac.uk:4,9
 lochend.inf.ed.ac.uk:3,9
-trieg.inf.ed.ac.uk:2,9
+trieg.inf.ed.ac.uk:2,9 ;NOT VALID
 migdale.inf.ed.ac.uk:1,9
 morton.inf.ed.ac.uk:0,8
-marce.inf.ed.ac.uk:0,7
+marce.inf.ed.ac.uk:0,7 ;NOT VALID
 morar.inf.ed.ac.uk:0,6
 rannoch.inf.ed.ac.uk:0,3
 quoich.inf.ed.ac.uk:0,2
