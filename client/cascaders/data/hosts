@@ -54,26 +54,26 @@ lovecchio.inf.ed.ac.uk:4,14
 
 [Level 5 West]
 cumiskey.inf.ed.ac.uk:0,0
-stashtny.inf.ed.ac.uk:1,0 ;NOT VALID
+statsny.inf.ed.ac.uk:1,0
 salei.inf.ed.ac.uk:2,0
 budaj.inf.ed.ac.uk:3,0
-lilis.inf.ed.ac.uk:4,0 ;NOT VALID
+liles.inf.ed.ac.uk:4,0
 
 holmstrom.inf.ed.ac.uk:0,2
 senna.inf.ed.ac.uk:1,2
 samsonov.inf.ed.ac.uk:2,2
-lidstrom.inf.ed.ac.uk:3,2 ;NOT VALID
+lidstorm.inf.ed.ac.uk:3,2
 modin.inf.ed.ac.uk:4,2
 
 hamilton.inf.ed.ac.uk:1,4
-eisholt.inf.ed.ac.uk:2,4 ;NOT VALID
+eishort.inf.ed.ac.uk:2,4
 hunt.inf.ed.ac.uk:3,4
 assynt.inf.ed.ac.uk:4,4
 
 davidson.inf.ed.ac.uk:0,6
 coulthard.inf.ed.ac.uk:1,6
 hill.inf.ed.ac.uk:2,6
-brabhum.inf.ed.ac.uk:3,6 ;NOT VALID
+brabham.inf.ed.ac.uk:3,6
 mansell.inf.ed.ac.uk:4,6
 ledin.inf.ed.ac.uk:6,6
 svatos.inf.ed.ac.uk:7,6
@@ -81,7 +81,7 @@ kovalev.inf.ed.ac.uk:8,6
 wolski.inf.ed.ac.uk:9,6
 pvospal.inf.ed.ac.uk:10,6 ;NOT VALID
 
-villsie.inf.ed.ac.uk:0,8 ;NOT VALID
+willsie.inf.ed.ac.uk:0,8
 raycroft.inf.ed.ac.uk:1,8
 guite.inf.ed.ac.uk:2,8
 clark.inf.ed.ac.uk:3,8
@@ -103,7 +103,7 @@ bracadale.inf.ed.ac.uk:9,10
 
 ohlund.inf.ed.ac.uk:0,12
 samuelsson.inf.ed.ac.uk:1,12
-aduya.inf.ed.ac.uk:2,12 ;NOT VALID
+oduya.inf.ed.ac.uk:2,12
 plekanec.inf.ed.ac.uk:3,12
 djurgardens.inf.ed.ac.uk:4,12
 scaven.inf.ed.ac.uk:6,12
