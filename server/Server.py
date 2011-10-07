@@ -271,17 +271,15 @@ class UserService(pb.Referenceable):
         if answer:
             logger.info(cascUsername + " said yes, help is now being given")
 
-            msg = cascUsername + ' accepted your help request' 
-            self.serverMessage(helpId, m)
-
-            messages = ['Remember to use pastebin to show code',
+            messages = [cascUsername + ' accepted your help request',
+                        'Remember to use pastebin to show code',
                         ('It may be easier to ask for a cascader to come to '
                          'your desk so you can explain the problem in person')]
             for m in messages:
                 self.serverMessage(helpId, m)
 
-            msgToCasc = '%s wanted help with %s because %s' % (self.user, subject, problem)
-            users[cascUsername].serverMessage(helpId, msg)
+            msgToCasc = '%s wanted help with %s because: %s' % (self.user, subject, problem)
+            users[cascUsername].serverMessage(helpId, msgToCasc)
         else:
             logger.info(cascUsername + " said no: " + why)
 
@@ -322,14 +320,19 @@ class UserService(pb.Referenceable):
         '''
 
         try:
-            self.client.callRemote('userSentMessage', helpId, message)
+            return self.client.callRemote('userSentMessage', helpId, message)
         except pb.DeadReferenceError:
             logger.debug('DeadRef. Client not connected')
             self.remote_logout()
             raise ClientNotConnected(self.user)
 
-    def serverMessage(self, helpid, message):
-        return self.client.callRemote('serverSentMessage', helpId, message)
+    def serverMessage(self, helpId, message):
+        try:
+            return self.client.callRemote('serverSentMessage', helpId, message)
+        except pb.DeadReferenceError:
+            logger.debug('DeadRef. Client not connected')
+            self.remote_logout()
+            raise ClientNotConnected(self.user)
 
     def remote_ping(self):
         ''' Can be used to see that the server is up and functioning '''
