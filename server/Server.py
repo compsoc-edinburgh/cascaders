@@ -258,18 +258,18 @@ class UserService(pb.Referenceable):
         except KeyError:
             raise ClientNotConnected(username)
 
-        cb = lambda res : self.onAskForHelpResponse(res, helpId, username)
+        cb = lambda res : self.onAskForHelpResponse(res, helpId, username, subject, problem)
         deferred.addCallback(cb)
         return deferred 
 
-    def onAskForHelpResponse(self, result, helpId, cascUsername):
+    def onAskForHelpResponse(self, result, helpId, cascUsername, subject, problem):
         '''
         Deals with logging from the cascaders response for asking for hlp
         '''
         (answer,why) = result
 
         if answer:
-            logger.info(cascUsername + "said yes, help is now being given")
+            logger.info(cascUsername + " said yes, help is now being given")
 
             msg = cascUsername + ' accepted your help request' 
             self.client.callRemote('serverSentMessage', helpId, msg)
@@ -279,8 +279,12 @@ class UserService(pb.Referenceable):
                          'your desk so you can explain the problem in person')]
             for m in messages:
                 self.client.callRemote('serverSentMessage', helpId, m)
+
+            msgToCasc = '%s wanted help with %s because %s' % (self.user, subject, problem)
+            users[cascUsername].callRemote('serverSentMessage', helpId, msg)
+
         else:
-            logger.info(cascUsername + "said no: " + why)
+            logger.info(cascUsername + " said no: " + why)
 
             msg = cascUsername + ' rejected your help request' 
             self.client.callRemote('serverSentMessage', helpId, msg)
@@ -305,7 +309,6 @@ class UserService(pb.Referenceable):
         except KeyError:
             logger.debug('Client not found')
             raise ClientNotConnected(toUser)
-
 
         logger.info(self.user + "->" + toUser + ":" + message)
 
