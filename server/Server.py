@@ -272,17 +272,16 @@ class UserService(pb.Referenceable):
             logger.info(cascUsername + " said yes, help is now being given")
 
             msg = cascUsername + ' accepted your help request' 
-            self.client.callRemote('serverSentMessage', helpId, msg)
+            self.serverMessage(helpId, m)
 
             messages = ['Remember to use pastebin to show code',
                         ('It may be easier to ask for a cascader to come to '
                          'your desk so you can explain the problem in person')]
             for m in messages:
-                self.client.callRemote('serverSentMessage', helpId, m)
+                self.serverMessage(helpId, m)
 
             msgToCasc = '%s wanted help with %s because %s' % (self.user, subject, problem)
-            users[cascUsername].callRemote('serverSentMessage', helpId, msg)
-
+            users[cascUsername].serverMessage(helpId, msg)
         else:
             logger.info(cascUsername + " said no: " + why)
 
@@ -328,6 +327,9 @@ class UserService(pb.Referenceable):
             logger.debug('DeadRef. Client not connected')
             self.remote_logout()
             raise ClientNotConnected(self.user)
+
+    def serverMessage(self, helpid, message):
+        return self.client.callRemote('serverSentMessage', helpId, message)
 
     def remote_ping(self):
         ''' Can be used to see that the server is up and functioning '''
