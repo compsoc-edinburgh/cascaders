@@ -24,6 +24,8 @@ class MessageDialog:
         self.window = self.builder.get_object('wdMessage')
         self.notebook = self.builder.get_object('notebook')
         self.builder.connect_signals(self)
+        pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(dr, 'icons', 'cascade.ico'))
+        self.window.set_icon(pixbuf)
 
         #holds the message buffers by helpid
         self.messageBuffers = {}

@@ -26,6 +26,8 @@ class AskForHelp:
         if parentWindow is not None:
             self.window.set_transient_for(parentWindow)
         self.builder.connect_signals(self)
+        pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(dr, 'icons', 'cascade.ico'))
+        self.window.set_icon(pixbuf)
 
         self.window.show_all()
 

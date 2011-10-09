@@ -121,6 +121,9 @@ class CascadersFrame:
         self.window.connect('destroy', lambda *a: gtk.main_quit())
         self.builder.connect_signals(self)
 
+        pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(dr, 'icons', 'cascade.ico'))
+        self.window.set_icon(pixbuf)
+
     def initLabs(self):
         ''' Sets up the labs drop down box stuff '''
         lst = gtk.ListStore(gobject.TYPE_STRING)

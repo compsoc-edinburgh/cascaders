@@ -20,6 +20,8 @@ class AcceptHelpDialog():
         self.window = builder.get_object('dgHelpAcceptReject')
         if parentWindow is not None:
             self.window.set_transient_for(parentWindow)
+        pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(dr, 'icons', 'cascade.ico'))
+        self.window.set_icon(pixbuf)
 
         heading = '%s is wanting help on %s' % (username, subject)
         builder.get_object('lbUserInfo').set_label(heading)
