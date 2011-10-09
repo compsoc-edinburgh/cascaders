@@ -1,1 +1,38 @@
+CompSoc Cascaders App
+=====================
 
+This is the client application for the Cascaders App
+
+Requirements
+------------
+
+* Python2
+* PyGtk for a gui library
+* Twisted Perspective Broker for messaging
+
+
+Installing
+----------
+
+To install run: `python setup.py install`
+
+Running
+--------
+Run `cascadeapp`
+
+Very Basic Code Overview
+------------------------
+
+The main application is controlled through the CascaderFrame (cascaderview.py)
+which backs onto the CascaderModel (cascadermodel.py)
+
+The cascader model holds most of the non gui data and communicates with the 
+view using callbacks registed in the view.
+
+The model deals with the server through two classes, the RpcClient (client.py) 
+which provides the functionality for client -> server and RpcService (service.py)
+that provides functionality for server -> client
+
+
+The program is single instance unless debug mode is used. It communicates to 
+check for other instances of the program using dbus (cascadeapp, dbusutil.py)
