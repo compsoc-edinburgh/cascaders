@@ -415,11 +415,12 @@ class CascadersFrame:
         if askedAutoCascading == False and autoCascade:
             self.settings['asked_autocascade'] = True
 
+            msg = 'Do you always want to start cascading on program startup'
             message = gtk.MessageDialog(None,
                                         gtk.DIALOG_MODAL,
                                         gtk.MESSAGE_INFO,
                                         gtk.BUTTONS_YES_NO,
-                                        "Do you want to enable auto cascading")
+                                        msg)
             resp = message.run()
             if resp == gtk.RESPONSE_YES:
                 self.builder.get_object('cbAutocascade').set_active(True)

@@ -258,29 +258,30 @@ class UserService(pb.Referenceable):
         except KeyError:
             raise ClientNotConnected(username)
 
-        cb = lambda res : self.onAskForHelpResponse(res, helpId, username)
+        cb = lambda res : self.onAskForHelpResponse(res, helpId, username, subject, problem)
         deferred.addCallback(cb)
         return deferred 
 
-    def onAskForHelpResponse(self, result, helpId, cascUsername):
+    def onAskForHelpResponse(self, result, helpId, cascUsername, subject, problem):
         '''
         Deals with logging from the cascaders response for asking for hlp
         '''
         (answer,why) = result
 
         if answer:
-            logger.info(cascUsername + "said yes, help is now being given")
+            logger.info(cascUsername + " said yes, help is now being given")
 
-            msg = cascUsername + ' accepted your help request' 
-            self.client.callRemote('serverSentMessage', helpId, msg)
-
-            messages = ['Remember to use pastebin to show code',
+            messages = [cascUsername + ' accepted your help request',
+                        'Remember to use pastebin to show code',
                         ('It may be easier to ask for a cascader to come to '
                          'your desk so you can explain the problem in person')]
             for m in messages:
-                self.client.callRemote('serverSentMessage', helpId, m)
+                self.serverMessage(helpId, m)
+
+            msgToCasc = '%s wanted help with %s because: %s' % (self.user, subject, problem)
+            users[cascUsername].serverMessage(helpId, msgToCasc)
         else:
-            logger.info(cascUsername + "said no: " + why)
+            logger.info(cascUsername + " said no: " + why)
 
             msg = cascUsername + ' rejected your help request' 
             self.client.callRemote('serverSentMessage', helpId, msg)
@@ -306,7 +307,6 @@ class UserService(pb.Referenceable):
             logger.debug('Client not found')
             raise ClientNotConnected(toUser)
 
-
         logger.info(self.user + "->" + toUser + ":" + message)
 
     def message(self, helpId, message):
@@ -320,7 +320,15 @@ class UserService(pb.Referenceable):
         '''
 
         try:
-            self.client.callRemote('userSentMessage', helpId, message)
+            return self.client.callRemote('userSentMessage', helpId, message)
+        except pb.DeadReferenceError:
+            logger.debug('DeadRef. Client not connected')
+            self.remote_logout()
+            raise ClientNotConnected(self.user)
+
+    def serverMessage(self, helpId, message):
+        try:
+            return self.client.callRemote('serverSentMessage', helpId, message)
         except pb.DeadReferenceError:
             logger.debug('DeadRef. Client not connected')
             self.remote_logout()
