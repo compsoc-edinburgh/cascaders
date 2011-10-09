@@ -43,6 +43,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="editable">False</property>
+                            <property name="wrap_mode">word-char</property>
                             <property name="buffer">tbMessages</property>
                           </object>
                         </child>
@@ -72,6 +73,7 @@
                               <object class="GtkTextView" id="txCurrentInput">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="wrap_mode">word-char</property>
                                 <property name="buffer">tbCurrentInput</property>
                               </object>
                             </child>
