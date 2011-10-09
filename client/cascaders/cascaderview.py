@@ -16,7 +16,7 @@ from twisted.internet import reactor
 import twisted.internet.error
 
 #rpc
-import client
+import client, service
 
 import labmap
 import settings
@@ -242,12 +242,22 @@ class CascadersFrame:
             
         self.model.registerOnMessgeHandler(helpid, onMessageFromServer)
 
+        def badHelpidError(reason):
+            reason.trap(service.BadHelpid)
+            msg = ('The remote client didn\'t have a id for this conversation, '
+                   'it may be too old. Message not sent')
+            self.messageDialog.writeMessage(helpid, 'Server', msg)
+
         def writeError(reason):
-            self.messageDialog.writeMessage(helpid, 'Server', 'The connection to the client was lost. Message not sent')
+            reason.trap('__main__.ClientNotConnected')
+            msg = ('The connection to the remote client was lost. '
+                   'Message not sent')
+            self.messageDialog.writeMessage(helpid, 'Server', msg)
             return reason
 
         def writeFunction(message):
             d = self.model.sendMessage(helpid, toUsername, message)
+            d.addErrback(badHelpidError)
             d.addErrback(writeError)
 
         self.messageDialog.registerMessageCallback(helpid, writeFunction)

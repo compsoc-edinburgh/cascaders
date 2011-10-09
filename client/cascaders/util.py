@@ -22,6 +22,12 @@ class CallbackMixin(object):
     def _callCallbacks(self, name, *args, **kwargs):
         return [f(*args, **kwargs) for f in self._callbacks[name]]
 
+    def _numCallbacks(self, name):
+        try:
+            return len(self._callbacks[name])
+        except KeyError:
+            return 0
+
 def errorDialog(msg):
     '''
     Provides an error message, and logging for the given message

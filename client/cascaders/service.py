@@ -6,6 +6,9 @@ from twisted.spread import pb
 
 from util import CallbackMixin
 
+class BadHelpid(Exception):
+    pass
+
 class RpcService(pb.Referenceable, CallbackMixin):
     '''
     This provides the service for data sent from the server to the client
@@ -63,16 +66,18 @@ class RpcService(pb.Referenceable, CallbackMixin):
         self._addCallback(helpid, func)
 
     def remote_userSentMessage(self, helpid, message):
-        try:
+        if self._numCallbacks(helpid):
             return self._callCallbacks(helpid, 'user', message)
-        except KeyError:
-            warn('Message dropped as no handler (helpid: %s)' % helpid)
+        else:
+            warn('Message dropped as no handler (helpid: %s)' % str(helpid))
+            raise BadHelpid
 
     def remote_serverSentMessage(self, helpid, message):
-        try:
+        if self._numCallbacks(helpid):
             return self._callCallbacks(helpid, 'server', message)
-        except KeyError:
-            warn('Message dropped as no handler (helpid: %s)' % helpid)
+        else:
+            warn('Message dropped as no handler (helpid: %s)' % str(helpid))
+            raise BadHelpid
     #--------
 
     def registerOnUserLeft(self, func):
