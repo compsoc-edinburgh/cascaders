@@ -15,6 +15,7 @@ class MessageDialog:
         self.cascaders = cascaders
 
         self.closedPages = {}
+        self.infoFromWidget = {}
 
         self.builder = gtk.Builder()
 
@@ -24,6 +25,8 @@ class MessageDialog:
         self.window = self.builder.get_object('wdMessage')
         self.notebook = self.builder.get_object('notebook')
         self.builder.connect_signals(self)
+        self.window.connect('delete-event', self.onWindowDelete)
+
         pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(dr, 'icons', 'cascade.ico'))
         self.window.set_icon(pixbuf)
 
@@ -70,14 +73,17 @@ class MessageDialog:
         iAmCascader - true if this client is the cascader
         '''
 
+
         #this is a bit nasty, but it ensures we aren't reusing an object
         b = gtk.Builder()
         dr = os.path.dirname(__file__)
         b.add_from_file(os.path.join(dr, 'gui', 'messaging.glade'))
-        widget = b.get_object('frMessageFrame')
+        widget = b.get_object('frMessageBox')
         self.messageBuffers[helpid] = b.get_object('tbMessages')
-        widget.reparent(self.window)
-        widget.show_all()
+        widget.reparent(self.window) #FIXME is an error
+        widget.show()
+
+        self.infoFromWidget[widget] = (title, helpid)
 
         hbox = self._getTabLabel(title, widget, helpid)
 
@@ -147,7 +153,16 @@ class MessageDialog:
         self.notebook.remove_page(pagenum)
 
         if self.notebook.get_n_pages() == 0:
-            self.window.hide_all()
+            self.window.hide()
+
+    def onWindowDelete(self, window, event):
+        window.hide()
+        for i in range(0, self.notebook.get_n_pages()):
+            widget = self.notebook.get_nth_page(i)
+            title, helpid = self.infoFromWidget[widget]
+            self.closedPages[helpid] = (title, widget)
+            self.notebook.remove_page(i)
+        return True
     
     def onSendClicked(self, widget, textbuff, helpid):
         start, end = textbuff.get_bounds()

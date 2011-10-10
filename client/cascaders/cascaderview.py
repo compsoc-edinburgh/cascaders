@@ -262,7 +262,7 @@ class CascadersFrame:
 
         self.messageDialog.registerMessageCallback(helpid, writeFunction)
 
-        self.messageDialog.window.show_all()
+        self.messageDialog.window.show()
 
     #--------------------------------------------------------------------------
     # Service callback functions, most of these are just simple wrappers
